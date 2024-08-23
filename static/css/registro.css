@@ -1,0 +1,111 @@
+/* Estilos generales */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color:#e2e2e1;
+    color: #333;
+}
+
+/* Header */
+#header {
+    background-color: #2755a2;
+    color:#e2e2e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+#header .logo {
+    height: 40px;
+}
+
+#header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#header nav ul li {
+    margin: 0 10px;
+}
+
+#header nav ul li a {
+    color:#e2e2e1;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+#header nav ul li a:hover {
+    background-color: #555;
+}
+
+/* Form container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-container {
+    background-color:#221e1f;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.form-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #e2e2e1;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #e2e2e1;
+}
+
+.form-container input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #221e1f;
+}
+
+.form-container button {
+    background-color: #2755a2;
+    color:#e2e2e1;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #555;
+}
+
+.back-link {
+    display: block;
+    margin-top: 10px;
+    color:#e2e2e1;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: #555;
+}

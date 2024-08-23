@@ -1,0 +1,76 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #e2e2e1;
+    margin: 0;
+    padding: 0;
+    color: #221e1f;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2755a2;
+    color: #e2e2e1;
+}
+
+.header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.header .username {
+    cursor: pointer;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #221e1f;
+}
+
+.device-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.device-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #e2e2e1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.device-item:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+
+.back-button {
+    padding: 10px 20px;
+    background-color: #2755a2;
+    color: #e2e2e1;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: block;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #3b4049;
+}
+

@@ -1,0 +1,143 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #e2e2e1;
+    margin: 0;
+    padding: 0;
+    color: #221e1f;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2755a2;
+    color: #e2e2e1;
+}
+
+.header .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.header .username {
+    cursor: pointer;
+}
+
+.main-content {
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #221e1f;
+}
+
+.device-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.device-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #e2e2e1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.device-item:hover {
+    background-color: #f0f0f0;
+}
+
+.navbar {
+    background-color: #2755a2;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar a {
+    color: #e2e2e1;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #221e1f;
+}
+
+/* Chat Styles */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    height: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.chat-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 80px);
+    margin-right: 10px;
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: #2755a2;
+    color: #e2e2e1;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.send-button:hover {
+    background-color: #3b4049;
+}
+/* Navbar */
+.navbar {
+    background-color:#2755a2;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar a {
+    color: #e2e2e1;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: #221e1f;
+}

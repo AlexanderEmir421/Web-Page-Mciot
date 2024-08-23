@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@latest"></script> <!-- Adaptador de fecha -->
+    <link rel="stylesheet" href="/static/css/device.css">
+    <link rel="stylesheet" href="/static/css/switch.css">
+    <link rel="stylesheet" href="/static/css/chatsoporte.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Itnovate</div>
+        <div class="username">Usuario</div>
+    </div>
+
+    <div class="main-content">
+        <h1>Dashboard</h1>
+        <div id="device-status">
+            <p id="connection-status">Conexion: <span id="connection-text">Desconectado</span></p>
+            <p id="power-status">Dispositivo: <span id="power-text">Apagado</span></p>
+        </div>
+        <div class="graph-container">
+            <canvas id="data-chart" width="400" height="200"></canvas>
+        </div>
+        <div class="graph-container">
+            <canvas id="critical-states-chart" width="400" height="200"></canvas>
+        </div>
+        <div class="reset-support">
+            <button onclick="resetDevice()">resetear dispositivo</button>
+            <button onclick="supportDevice()">Soporte</button>
+        </div>
+        <div id="variable-inputs"></div>
+    </div>
+
+    <div class="navbar">
+        <a href="usuario.html">Inicio</a>
+        <a href="insta.html">Tutoriales y productos</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" id="support-link">Soporte</a>
+    </div>
+
+    <!-- Contenedor del chat de soporte -->
+    <div id="chat-container" class="chat-container hidden">
+        <div class="chat-header">
+            <span>Soporte</span>
+            <button id="minimize-chat" class="chat-button">_</button>
+            <button id="close-chat" class="chat-button">X</button>
+        </div>
+        <div id="chat-box" class="chat-box"></div>
+        <input type="text" id="chat-input" class="chat-input" placeholder="Escribe un mensaje...">
+        <button id="send-button" class="send-button">Enviar</button>
+    </div>
+
+    <script src="/static/js/dinamicboton.js"></script>
+    <script src="/static/js/soporte.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const device = urlParams.get('device');
+            
+            fetch('/HistoriadorTest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({
+                    id_device: device,
+                    usuario_id: localStorage.getItem('user_id')
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+            })
+            .then(data => {
+                console.log(data); // Verifica el contenido de los datos
+                if (data.error) {
+                    console.error('Error:', data.error);
+                } else {
+                    createDynamicElements(data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    
+        function createDynamicElements(data) {
+            const variableInputs = document.getElementById('variable-inputs');
+            data.forEach(item => {
+                let element;
+                if (item.Nombre.toLowerCase().includes('temperatura')) {
+                    drawDataChart(item);  // Muestra los datos de temperatura en un gráfico
+                } else if (item.Nombre.toLowerCase().includes('estado motor')) {
+                    element = createLiveDataDisplay(item);  // Muestra el estado actual del motor
+                }
+                if (element) {
+                    variableInputs.appendChild(element);
+                }
+            });
+        }
+    
+        function drawDataChart(data) {
+            const ctx = document.getElementById('data-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.Dato.map(d => new Date(d.fechayhora)),
+                    datasets: [{
+                        label: data.Nombre,
+                        data: data.Dato.map(d => d.dato),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'hour'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    
+        function createLiveDataDisplay(item) {
+            const container = document.createElement('div');
+            container.classList.add('live-data-container');
+            container.innerHTML = `
+                <p>${item.Nombre}: ${item.Dato.length > 0 ? item.Dato[0].dato : 'No data available'}</p>
+            `;
+            return container;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itnovate</title>
+    <link rel="stylesheet" href="/static/css/usario.css">
+    <link rel="stylesheet" href="/static/css/switch.css">
+    <link rel="stylesheet" href="/static/css/chatsoporte.css">
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Itnovate</div>
+        <div class="username" onclick="goToProfile()"><span id="username">Usuario</span></div>
+    </div>
+
+    <div class="main-content">
+        <h1>Bienvenido al panel de Itnovate</h1>
+        <a href="registerdevice.html" class="register-button">Registrar Dispositivo</a>
+        <ul class="device-list" id="device-list">
+            <!-- Lista de dispositivos registrados -->
+        </ul>
+    </div>
+
+    <div class="navbar">
+        <a href="insta.html">Tutoriales y productos</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" id="support-link">Soporte</a>
+    </div>
+
+    <!-- Contenedor del chat de soporte -->
+    <div id="chat-container" class="chat-container hidden">
+        <div class="chat-header">
+            <span>Soporte</span>
+            <button id="minimize-chat" class="chat-button">_</button>
+            <button id="close-chat" class="chat-button">X</button>
+        </div>
+        <div id="chat-box" class="chat-box"></div>
+        <input type="text" id="chat-input" class="chat-input" placeholder="Escribe un mensaje...">
+        <button id="send-button" class="send-button">Enviar</button>
+    </div>
+
+    <script src="/static/js/soporte.js"></script>
+    <script src="/static/js/usuario.js"></script>
+</body>
+</html>
