@@ -1,21 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Dispositivo</title>
+    <title>Mciot - Registrar Dispositivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/registerdevice.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="loading-container">
-            <div class="loading-animation"></div>
-            <p class="loading-text">Conectacte manualmente a la red ItnovatePro<br> Password: Itnovate123</p>
-        </div>
+    <div class="min-h-screen">
+        <header>
+            <div class="logo">Mciot</div>
+        </header>
+
+        <main>
+            <div class="card">
+                <div class="card-header">
+                    <h1>Registrar Dispositivo</h1>
+                </div>
+                <div class="card-content">
+                    <div class="btn-group">
+                        <button id="manualBtn" class="btn btn-outline">
+                            <i data-lucide="list" class="mr-2 h-4 w-4"></i> Conexión Manual
+                        </button>
+                        <button id="qrBtn" class="btn btn-outline">
+                            <i data-lucide="qr-code" class="mr-2 h-4 w-4"></i> Escanear QR
+                        </button>
+                    </div>
+
+                    <div id="manualInstructions" class="instructions hidden">
+                        <h2>Instrucciones para la conexión manual:</h2>
+                        <ol>
+                            <li>Enchufe su dispositivo</li>
+                            <li>Una vez prendido busca la red wifi "Mciot" conectarse</li>
+                            <li>Verifica estar conectado a la red "Mciot" y vuelve a esta pagina </li>
+                            <li>Dale click a "YA ME CONECTE" ,espera para seguir con tu configuración</li>
+                        </ol>
+                    </div>
+
+                    <div id="qrScanner" class="qr-scanner hidden">
+                        <video id="qrVideo" playsinline></video>
+                    </div>
+
+                    <button id="connectBtn" class="btn btn-primary hidden">
+                        YA ME CONECTÉ
+                    </button>
+                </div>
+            </div>
+        </main>
     </div>
-    <div class="container-2">
-        <button class="back-button" onclick="goBack()">Volver Atrás</button>
-    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.3.1/dist/jsQR.min.js"></script>
     <script src="/static/js/registerdevice.js"></script>
 </body>
 </html>
