@@ -5,17 +5,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function loadSettings() {
         const advancedSettings = [
-            'Configuración de red',
-            'Actualizaciones de firmware',
-            'Restablecimiento de fábrica'
+            'Cambiar el estado',
+            'Resetear Dispositivo',
+            'Conexion a internet '
         ];
         const notifications = [
-            'Notificaciones por correo electrónico',
-            'Notificaciones push',
-            'Alertas de sistema'
+            'Activa las alertas de estados criticos',
+            'Recibe Novedades de tu dispositivo',
         ];
         const otherSettings = [
-            'Gestión de usuarios',
+            'Datos de la cuenta',
             'Política de privacidad',
             'Términos y condiciones'
         ];

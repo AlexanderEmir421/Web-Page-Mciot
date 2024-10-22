@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://192.168.100.60:5000/perfil', {
+    fetch('https://sjrc.com.ar/perfil', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

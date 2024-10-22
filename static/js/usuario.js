@@ -1,105 +1,145 @@
-/*
-    // Test
-    const deviceList = document.getElementById('device-list');
-    const testDevice = createDeviceElement({ Nombre: "Arduino1Prueba", idDis: 1, Estado: true });
-    deviceList.appendChild(testDevice);
-*/
 document.addEventListener('DOMContentLoaded', () => {
     const username = localStorage.getItem('usuario');
-    document.getElementById('username').innerText = username ? `Hola ${username}` : 'Usuario';
+    const deviceList = document.getElementById('device-list');
+    const supportLink = document.getElementById('support-link');
 
-    // Hacer una solicitud GET al endpoint /ListarDispo para obtener los dispositivos
-    fetch('http://192.168.100.60:5000/ListarDispo', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token') // Asumiendo que el token JWT está almacenado en localStorage
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data); // Agrega esta línea para registrar la respuesta
-        const deviceList = document.getElementById('device-list');
-        if (data.msg) {
-            console.error(data.msg);
-        } else {
-            data.forEach(device => {
-                const deviceElement = createDeviceElement(device);
-                deviceList.appendChild(deviceElement);
+    // Set username
+    document.getElementById('username').innerText = username ? `Hola, ${username}` : 'Usuario';
+
+    // Fetch and display devices
+    fetchDevices();
+
+    function fetchDevices() {
+        fetch('https://sjrc.com.ar/ListarDispo', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.msg) {
+                console.error(data.msg);
+                deviceList.innerHTML = '<li>No se pudieron cargar los dispositivos.</li>';
+            } else {
+                deviceList.innerHTML = '';
+                data.forEach(device => {
+                    const deviceElement = createDeviceElement(device);
+                    deviceList.appendChild(deviceElement);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            deviceList.innerHTML = '<li>Error al cargar los dispositivos.</li>';
+        });
+    }
+
+    function createDeviceElement(device) {
+        const li = document.createElement('li');
+        li.classList.add('device-item');
+        li.dataset.id = device.idDis;
+
+        const deviceInfo = document.createElement('div');
+        deviceInfo.classList.add('device-info');
+
+        const statusIndicator = document.createElement('span');
+        statusIndicator.classList.add('status-indicator');
+        statusIndicator.classList.add(device.UltimoDato === "1" ? 'connected' : 'disconnected');
+        statusIndicator.textContent = device.UltimoDato === "1" ? 'Conectado' : 'Desconectado';
+
+        deviceInfo.appendChild(statusIndicator);
+        deviceInfo.appendChild(document.createTextNode(device.Nombre));
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('button-container');
+
+        const renameButton = createButton('rename-button', '/static/img/escribir.png', 'Cambiar nombre', () => renameDevice(device.idDis));
+        const deleteButton = createButton('delete-button', '/static/img/tacho.png', 'Eliminar dispositivo', () => deleteDevice(device.idDis));
+
+        buttonContainer.appendChild(renameButton);
+        buttonContainer.appendChild(deleteButton);
+
+        li.appendChild(deviceInfo);
+        li.appendChild(buttonContainer);
+
+        li.addEventListener('click', (event) => {
+            if (!event.target.closest('.button-container')) {
+                window.location.href = `/device.html?device=${device.idDis}`;
+            }
+        });
+
+        return li;
+    }
+
+    function createButton(className, imgSrc, altText, onClick) {
+        const button = document.createElement('button');
+        button.classList.add(className);
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = altText;
+        button.appendChild(img);
+        button.addEventListener('click', onClick);
+        return button;
+    }
+
+    function renameDevice(deviceId) {
+        const newName = prompt('Ingrese el nuevo nombre del dispositivo:');
+        if (newName) {
+            fetch('https://sjrc.com.ar/modificarDispositivo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({ idDis: deviceId, nuevo_nombre: newName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Nombre del dispositivo actualizado correctamente.');
+                    fetchDevices(); // Refresh the device list
+                } else {
+                    alert('Error al actualizar el nombre del dispositivo: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al actualizar el nombre del dispositivo.');
             });
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+    }
+
+    function deleteDevice(deviceId) {
+        if (confirm('¿Está seguro de que desea eliminar este dispositivo?')) {
+            fetch('https://sjrc.com.ar/eliminarDispositivo', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+                },
+                body: JSON.stringify({ idDis: deviceId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Dispositivo eliminado correctamente.');
+                    fetchDevices(); // Refresh the device list
+                } else {
+                    alert('Error al eliminar el dispositivo: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar el dispositivo.');
+            });
+        }
+    }
 });
 
-function createDeviceElement(device) {
-    const li = document.createElement('li');
-    li.classList.add('device-item');
-    li.dataset.id = device.idDis;
-
-    const deviceInfo = document.createElement('div');
-    deviceInfo.classList.add('device-info');
-    deviceInfo.innerText = device.Nombre;
-
-    const switchContainer = document.createElement('div');
-    switchContainer.classList.add('switch-container');
-    switchContainer.addEventListener('click', (event) => {
-        event.stopPropagation(); // Prevent event bubbling
-    });
-
-    const switchLabel = document.createElement('label');
-    switchLabel.classList.add('switch');
-
-    const switchInput = document.createElement('input');
-    switchInput.classList.add('checkbox');
-    switchInput.type = 'checkbox';
-    switchInput.checked = device.Estado;
-    switchInput.name = `device-switch-${device.idDis}`; // Añadiendo un atributo name único
-    switchInput.id = `checkbox-${device.idDis}`; // Añadiendo un atributo id único
-    switchInput.addEventListener('change', () => {
-        toggleDeviceState(device.idDis, switchInput.checked);
-        updateDeviceStyle(li, switchInput.checked);
-    });
-
-    const switchSpan = document.createElement('span');
-    switchSpan.classList.add('slider');
-
-    switchLabel.appendChild(switchInput);
-    switchLabel.appendChild(switchSpan);
-    switchContainer.appendChild(switchLabel);
-
-    li.appendChild(deviceInfo);
-    li.appendChild(switchContainer);
-    li.addEventListener('click', () => {
-        window.location.href = `/templates/device.html?device=${device.idDis}`;
-    });
-
-    updateDeviceStyle(li, switchInput.checked);
-    return li;
+function logout() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('usuario');
+    window.location.href = 'login.html';
 }
-
-function updateDeviceStyle(deviceElement, isOn) {
-    if (isOn) {
-        deviceElement.style.backgroundColor = '#221e1f';
-        deviceElement.style.color = '#e2e2e1';
-    } else {
-        deviceElement.style.backgroundColor = '#e2e2e1';
-        deviceElement.style.color = '#757575';
-    }
-}
-
-function toggleDeviceState(deviceId, state) {
-    // Aquí puedes hacer una solicitud POST o PUT para actualizar el estado del dispositivo en el servidor
-    console.log(`Device ID: ${deviceId}, State: ${state}`);
-
-    // Actualizar el estilo del dispositivo en la lista
-    const deviceElement = document.querySelector(`li[data-id="${deviceId}"]`);
-    updateDeviceStyle(deviceElement, state);
-}
-
-function goToProfile() {
-    window.location.href = '/templates/perfil.html';
-}
-

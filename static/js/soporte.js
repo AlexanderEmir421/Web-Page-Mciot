@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             chatInput.value = '';
             // Simula una respuesta del bot
             setTimeout(() => {
-                const botMessage = 'Esta es una respuesta automática del bot.';
+                const botMessage = 'La asistencia tecnica se encuentra en desarrollo.';
                 addMessageToChatBox(botMessage, 'bot');
             }, 1000);
         }
