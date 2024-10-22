@@ -11,7 +11,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #2755a2;
+    background-color: #221e1f;
     color: #e2e2e1;
 }
 
@@ -42,7 +42,7 @@ h1 {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    border: 2px solid #2755a2;
+    border: 2px solid #221e1f;
 }
 
 .profile-info {
@@ -55,7 +55,7 @@ h1 {
 
 .change-password-button {
     padding: 10px 20px;
-    background-color: #2755a2;
+    background-color: #221e1f;
     color: #e2e2e1;
     border: none;
     cursor: pointer;
@@ -92,7 +92,7 @@ h1 {
 
 .back-button {
     padding: 10px 20px;
-    background-color: #2755a2;
+    background-color: #221e1f;
     color: #e2e2e1;
     border: none;
     cursor: pointer;
@@ -108,7 +108,7 @@ h1 {
 
 /* Navbar */
 .navbar {
-    background-color:#2755a2;
+    background-color:#221e1f;
     padding: 10px 20px;
     position: fixed;
     bottom: 0;
@@ -126,4 +126,58 @@ h1 {
 
 .navbar a:hover {
     background-color: #221e1f;
+}
+
+/* Hacer el contenido responsivo */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-info {
+        margin-left: 0;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .profile-pic img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .header .logo {
+        font-size: 1.2em;
+    }
+
+    .navbar a {
+        padding: 5px 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .profile-pic img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .change-password-button,
+    .back-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
+
+    .navbar a {
+        padding: 8px 0;
+        text-align: center;
+        width: 100%;
+    }
 }

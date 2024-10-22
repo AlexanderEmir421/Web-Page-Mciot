@@ -1,61 +1,71 @@
-.component-title {
-    width: 100%;
-    position: absolute;
-    z-index: 999;
-    top: 30px;
-    left: 0;
-    padding: 0;
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #888;
-    text-align: center;
-}
-
-/* The switch - the box around the slider */
-.switch-container {
-    width: 51px;
-    height: 31px;
+.switch {
     position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
-/* Hide default HTML checkbox */
-.checkbox {
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
-    position: absolute;
 }
 
-.switch {
-    width: 100%;
-    height: 100%;
-    display: block;
-    background-color: #e9e9eb;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.2s ease-out;
-}
-
-/* The slider */
 .slider {
-    width: 27px;
-    height: 27px;
     position: absolute;
-    left: calc(50% - 27px/2 - 10px);
-    top: calc(50% - 27px/2);
-    border-radius: 50%;
-    background: #FFFFFF;
-    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15), 0px 3px 1px rgba(0, 0, 0, 0.06);
-    transition: all 0.2s ease-out;
     cursor: pointer;
-}   
-
-.checkbox:checked + .switch {
-    background-color: #34C759;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
 }
 
-.checkbox:checked + .switch .slider {
-    left: calc(50% - 27px/2 + 10px);
-    top: calc(50% - 27px/2);
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+    background-color: #2755a2;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2755a2;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Mejora de la transición */
+.slider, .slider:before {
+    transition: all 0.4s cubic-bezier(.45,.05,.55,.95);
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .switch {
+        width: 50px;
+        height: 28px;
+    }
+
+    .slider:before {
+        height: 22px;
+        width: 22px;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(22px);
+    }
 }
